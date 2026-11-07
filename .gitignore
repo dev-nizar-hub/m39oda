@@ -1,0 +1,14 @@
+# Credentials & Scratch scripts
+scratch/
+config/db_config.php
+*.log
+*.tmp
+
+# Agent & AI framework internals
+.agents/
+
+# OS & IDE metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

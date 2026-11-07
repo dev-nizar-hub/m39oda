@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossier de Conception & Spécification UML — RestoOS Cloud (M39ODA)</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 18mm 20mm 18mm 20mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #1e293b;
+            background: #f1f5f9;
+            line-height: 1.5;
+            font-size: 10pt;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Screen Presentation Wrapper */
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 25px auto;
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 22mm 20mm 20mm 20mm;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .page-content {
+            flex: 1 0 auto;
+        }
+
+        .page-footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8.5pt;
+            color: #64748b;
+        }
+
+        /* Headings & Title Styling */
+        .doc-header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding-top: 5px;
+        }
+
+        .doc-title {
+            font-size: 19pt;
+            font-weight: 800;
+            color: #0f2b5c;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+
+        .doc-subtitle {
+            font-size: 12.5pt;
+            font-weight: 600;
+            color: #c2410c;
+            margin-bottom: 12px;
+        }
+
+        .doc-divider {
+            width: 70px;
+            height: 2.5px;
+            background: #c2410c;
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        h1.section-title {
+            font-size: 13.5pt;
+            font-weight: 800;
+            color: #0f2b5c;
+            border-bottom: 2px solid #0284c7;
+            padding-bottom: 5px;
+            margin-bottom: 16px;
+            letter-spacing: -0.2px;
+        }
+
+        h2.subsection-title {
+            font-size: 11.5pt;
+            font-weight: 800;
+            color: #0284c7;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            letter-spacing: -0.2px;
+        }
+
+        h3.block-title {
+            font-size: 10pt;
+            font-weight: 800;
+            color: #0f2b5c;
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+
+        p {
+            margin-bottom: 8px;
+            color: #334155;
+            text-align: justify;
+        }
+
+        /* Lists */
+        ul.bullet-list {
+            list-style: none;
+            margin-bottom: 10px;
+            padding-left: 0;
+        }
+
+        ul.bullet-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 4px;
+            color: #334155;
+        }
+
+        ul.bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: #0284c7;
+            font-weight: bold;
+            font-size: 11pt;
+            line-height: 1;
+        }
+
+        ol.step-list {
+            margin-left: 20px;
+            margin-bottom: 12px;
+            color: #334155;
+        }
+
+        ol.step-list li {
+            margin-bottom: 3.5px;
+            padding-left: 4px;
+        }
+
+        .alt-scenario-title {
+            font-weight: 800;
+            color: #c2410c;
+            margin-top: 8px;
+            margin-bottom: 3px;
+            font-size: 9.5pt;
+        }
+
+        .postcondition-subtitle {
+            font-weight: 700;
+            color: #0f2b5c;
+            margin-top: 6px;
+            margin-bottom: 3px;
+            font-size: 9.5pt;
+        }
+
+        .callout-box {
+            background: #fff7ed;
+            border-left: 3.5px solid #c2410c;
+            padding: 8px 12px;
+            margin: 12px 0 14px 0;
+            font-size: 9.2pt;
+            color: #9a3412;
+        }
+
+        .figure-caption {
+            font-size: 8pt;
+            font-style: italic;
+            color: #64748b;
+            text-align: center;
+            max-width: 90%;
+            margin: 12px auto 0 auto;
+            line-height: 1.4;
+        }
+
+        /* SVG Containers */
+        .diagram-wrapper {
+            margin: 20px auto 10px auto;
+            text-align: center;
+        }
+
+        .uml-svg {
+            max-width: 100%;
+            height: auto;
+            display: inline-block;
+        }
+
+        /* Data Tables */
+        table.spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 9pt;
+        }
+
+        table.spec-table th, table.spec-table td {
+            border: 1px solid #cbd5e1;
+            padding: 6px 10px;
+            text-align: left;
+        }
+
+        table.spec-table th {
+            background: #f8fafc;
+            color: #0f2b5c;
+            font-weight: 700;
+        }
+
+        /* Print Media Styles */
+        @media print {
+            body {
+                background: #ffffff;
+                color: #1e293b;
+                font-size: 9.5pt;
+                margin: 0;
+                padding: 0;
+            }
+
+            .page-container {
+                width: 100%;
+                min-height: 255mm;
+                height: 255mm;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                page-break-after: always;
+                break-after: page;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .page-container:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            .page-footer {
+                display: flex;
+                border-top: 1px solid #cbd5e1;
+                padding-top: 8px;
+                font-size: 8.5pt;
+                color: #64748b;
+                position: relative;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         PAGE 1 : COUVERTURE & DIAGRAMME DE CAS D'UTILISATION GLOBAL
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <header class="doc-header">
+                <h1 class="doc-title">Dossier de Conception &amp; Spécification UML</h1>
+                <div class="doc-subtitle">RestoOS Cloud — Système M39ODA (Sandwicherie Artisanale &amp; SaaS Multi-Tenant)</div>
+                <div class="doc-divider"></div>
+            </header>
+
+            <h1 class="section-title">1. Diagramme global des cas d’utilisation (Use Case Diagram)</h1>
+
+            <div class="diagram-wrapper">
+                <svg class="uml-svg" width="620" height="520" viewBox="0 0 620 520" xmlns="http://www.w3.org/2000/svg">
+                    <style>
+                        .sys-box { fill: #ffffff; stroke: #0f2b5c; stroke-width: 2.2; }
+                        .sys-txt { font-family: sans-serif; font-size: 13px; font-weight: 800; fill: #0f2b5c; }
+                        .actor-name { font-family: sans-serif; font-size: 11px; font-weight: 800; text-anchor: middle; }
+                        .actor-cais { fill: #c2410c; }
+                        .actor-cuis { fill: #15803d; }
+                        .actor-ger  { fill: #d97706; }
+                        .actor-saas { fill: #4f46e5; }
+                        .actor-tv   { fill: #475569; }
+                        .ellipse-uc { fill: #f8fafc; stroke: #0284c7; stroke-width: 1.6; }
+                        .ellipse-inc { fill: #eff6ff; stroke: #3b82f6; stroke-width: 1.4; stroke-dasharray: 4,3; }
+                        .uc-label { font-family: sans-serif; font-size: 10.5px; font-weight: 700; fill: #0f2b5c; text-anchor: middle; }
+                        .uc-label-sub { font-family: sans-serif; font-size: 8.5px; fill: #475569; text-anchor: middle; }
+                        .link-line { stroke: #0f2b5c; stroke-width: 1.4; }
+                        .link-dash { stroke: #0284c7; stroke-width: 1.2; stroke-dasharray: 4,3; }
+                        .tag-rel { font-family: sans-serif; font-size: 8px; font-weight: bold; fill: #0284c7; text-anchor: middle; }
+                        .stick-figure { stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                    </style>
+
+                    <!-- System Boundary -->
+                    <rect class="sys-box" x="140" y="20" width="340" height="480" rx="4"/>
+                    <text class="sys-txt" x="155" y="44">Système RestoOS Cloud (M39ODA)</text>
+
+                    <!-- USE CASES -->
+                    <!-- UC 1: Saisir Commande -->
+                    <ellipse class="ellipse-uc" cx="310" cy="85" rx="85" ry="24"/>
+                    <text class="uc-label" x="310" y="88">Saisir &amp; Valider Commande</text>
+
+                    <!-- UC 1.1: Personnaliser Recette -->
+                    <ellipse class="ellipse-inc" cx="240" cy="155" rx="75" ry="20"/>
+                    <text class="uc-label" x="240" y="155">Personnaliser Recette</text>
+                    <text class="uc-label-sub" x="240" y="166">(Maâkouda, Sauces)</text>
+
+                    <!-- UC 1.2: Calculer Monnaie DH -->
+                    <ellipse class="ellipse-inc" cx="390" cy="155" rx="75" ry="20"/>
+                    <text class="uc-label" x="390" y="155">Calculer Monnaie (DH)</text>
+                    <text class="uc-label-sub" x="390" y="166">Espèces reçues</text>
+
+                    <!-- UC 1.3: Imprimer Double Ticket -->
+                    <ellipse class="ellipse-inc" cx="310" cy="215" rx="80" ry="20"/>
+                    <text class="uc-label" x="310" y="215">Générer Double Ticket</text>
+                    <text class="uc-label-sub" x="310" y="226">(Client + Bon Cuisine)</text>
+
+                    <!-- UC 2: Préparer Commande KDS -->
+                    <ellipse class="ellipse-uc" cx="310" cy="285" rx="85" ry="22"/>
+                    <text class="uc-label" x="310" y="285">Préparer Commande</text>
+                    <text class="uc-label-sub" x="310" y="296">(File KDS Cuisine)</text>
+
+                    <!-- UC 3: Diffuser Statuts TV -->
+                    <ellipse class="ellipse-uc" cx="310" cy="350" rx="80" ry="20"/>
+                    <text class="uc-label" x="310" y="350">Diffuser Appel TV &amp; Carillon</text>
+                    <text class="uc-label-sub" x="310" y="361">(En Cuisson / Prête)</text>
+
+                    <!-- UC 4: Gérer Menu & Clôture Z -->
+                    <ellipse class="ellipse-uc" cx="240" cy="425" rx="75" ry="22"/>
+                    <text class="uc-label" x="240" y="423">Menu &amp; Rapport Z</text>
+                    <text class="uc-label-sub" x="240" y="435">(Stocks &amp; Clôture CA)</text>
+
+                    <!-- UC 5: Superviser SaaS Multi-Tenant -->
+                    <ellipse class="ellipse-uc" cx="400" cy="425" rx="70" ry="22"/>
+                    <text class="uc-label" x="400" y="423">Tour de Contrôle</text>
+                    <text class="uc-label-sub" x="400" y="435">(Multi-Restaurants)</text>
+
+                    <!-- Relationships within System -->
+                    <line class="link-dash" x1="280" y1="108" x2="250" y2="135"/>
+                    <text class="tag-rel" x="250" y="118">«extend»</text>
+
+                    <line class="link-dash" x1="340" y1="108" x2="375" y2="135"/>
+                    <text class="tag-rel" x="375" y="118">«include»</text>
+
+                    <line class="link-dash" x1="310" y1="109" x2="310" y2="195"/>
+                    <text class="tag-rel" x="325" y="180">«include»</text>
+
+                    <line class="link-dash" x1="310" y1="307" x2="310" y2="330"/>
+                    <text class="tag-rel" x="330" y="322">«trigger»</text>
+
+                    <!-- ACTEUR 1 : Caissier (Gauche) -->
+                    <g transform="translate(45, 60)">
+                        <circle cx="20" cy="12" r="9" class="stick-figure" stroke="#c2410c"/>
+                        <line x1="20" y1="21" x2="20" y2="48" class="stick-figure" stroke="#c2410c"/>
+                        <line x1="8" y1="30" x2="32" y2="30" class="stick-figure" stroke="#c2410c"/>
+                        <line x1="20" y1="48" x2="8" y2="70" class="stick-figure" stroke="#c2410c"/>
+                        <line x1="20" y1="48" x2="32" y2="70" class="stick-figure" stroke="#c2410c"/>
+                        <text class="actor-name actor-cais" x="20" y="86">Caissier</text>
+                    </g>
+                    <line class="link-line" x1="80" y1="90" x2="225" y2="85"/>
+
+                    <!-- ACTEUR 2 : Cuisinier (Droite) -->
+                    <g transform="translate(520, 250)">
+                        <circle cx="20" cy="12" r="9" class="stick-figure" stroke="#15803d"/>
+                        <line x1="20" y1="21" x2="20" y2="48" class="stick-figure" stroke="#15803d"/>
+                        <line x1="8" y1="30" x2="32" y2="30" class="stick-figure" stroke="#15803d"/>
+                        <line x1="20" y1="48" x2="8" y2="70" class="stick-figure" stroke="#15803d"/>
+                        <line x1="20" y1="48" x2="32" y2="70" class="stick-figure" stroke="#15803d"/>
+                        <text class="actor-name actor-cuis" x="20" y="86">Cuisinier</text>
+                    </g>
+                    <line class="link-line" x1="520" y1="285" x2="395" y2="285"/>
+
+                    <!-- ACTEUR 3 : Gérant (Gauche Bas) -->
+                    <g transform="translate(45, 385)">
+                        <circle cx="20" cy="12" r="9" class="stick-figure" stroke="#d97706"/>
+                        <line x1="20" y1="21" x2="20" y2="48" class="stick-figure" stroke="#d97706"/>
+                        <line x1="8" y1="30" x2="32" y2="30" class="stick-figure" stroke="#d97706"/>
+                        <line x1="20" y1="48" x2="8" y2="70" class="stick-figure" stroke="#d97706"/>
+                        <line x1="20" y1="48" x2="32" y2="70" class="stick-figure" stroke="#d97706"/>
+                        <text class="actor-name actor-ger" x="20" y="86">Gérant</text>
+                    </g>
+                    <line class="link-line" x1="80" y1="420" x2="165" y2="425"/>
+
+                    <!-- ACTEUR 4 : SuperAdmin (Droite Bas) -->
+                    <g transform="translate(520, 385)">
+                        <circle cx="20" cy="12" r="9" class="stick-figure" stroke="#4f46e5"/>
+                        <line x1="20" y1="21" x2="20" y2="48" class="stick-figure" stroke="#4f46e5"/>
+                        <line x1="8" y1="30" x2="32" y2="30" class="stick-figure" stroke="#4f46e5"/>
+                        <line x1="20" y1="48" x2="8" y2="70" class="stick-figure" stroke="#4f46e5"/>
+                        <line x1="20" y1="48" x2="32" y2="70" class="stick-figure" stroke="#4f46e5"/>
+                        <text class="actor-name actor-saas" x="20" y="86">SuperAdmin</text>
+                    </g>
+                    <line class="link-line" x1="520" y1="420" x2="470" y2="425"/>
+
+                    <!-- ACTEUR 5 : Écran TV (Dispositif Sortie) -->
+                    <g transform="translate(520, 325)">
+                        <rect x="6" y="5" width="28" height="20" rx="2" fill="none" stroke="#475569" stroke-width="1.8"/>
+                        <line x1="20" y1="25" x2="20" y2="32" stroke="#475569" stroke-width="2"/>
+                        <line x1="12" y1="32" x2="28" y2="32" stroke="#475569" stroke-width="2"/>
+                        <text class="actor-name actor-tv" x="20" y="44">Écran TV</text>
+                    </g>
+                    <line class="link-line" x1="520" y1="345" x2="390" y2="350"/>
+                </svg>
+
+                <p class="figure-caption">
+                    Figure 1 — Diagramme global des cas d’utilisation de la plateforme RestoOS Cloud. Le système assure la synchronisation en temps réel entre le terminal caisse, le poste de préparation, l'affichage client et la gestion d'établissement.
+                </p>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception UML — RestoOS Cloud (M39ODA)</span>
+            <span>Page 1 / 5</span>
+        </footer>
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 2 : SPÉCIFICATION CAS D'UTILISATION 1 (CAISSIER)
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <h1 class="section-title">2. Spécification détaillée des cas d’utilisation opérationnels</h1>
+
+            <h2 class="subsection-title">2.1 Cas d’utilisation 1 — Saisir et valider une commande (Terminal Caisse)</h2>
+
+            <h3 class="block-title">1. Nom du cas d’utilisation</h3>
+            <p>Saisir et valider une commande artisanale.</p>
+
+            <h3 class="block-title">2. Acteur principal</h3>
+            <p>Caissier (Authentifié avec badge de caisse actif).</p>
+
+            <h3 class="block-title">3. Préconditions</h3>
+            <ul class="bullet-list">
+                <li>Le caissier est connecté à son terminal POS (<code>index.php</code>) pour son restaurant d'affectation (ex: <em>M3i9dat Ba M'Barek</em>).</li>
+                <li>Le fond de caisse initial de la journée a été déclaré et enregistré.</li>
+                <li>Le catalogue des sandwichs (Maâkouda, Komplis, etc.) et les stocks d'ingrédients sont synchronisés.</li>
+            </ul>
+
+            <h3 class="block-title">4. Scénario nominal</h3>
+            <ol class="step-list">
+                <li>Le caissier consulte le catalogue tactile classé par catégories (Sandwichs Maâkouda, Menus Duo, Boissons).</li>
+                <li>Pour un sandwich standard, il clique directement sur la carte pour l'ajouter au panier (Ajout rapide).</li>
+                <li>Pour une recette sur-mesure, il appuie sur le bouton tactile ergonomique <strong>« Personnaliser »</strong>.</li>
+                <li>Le système ouvre la fenêtre modale présentant les ingrédients de base (Pain artisanal, Galette Maâkouda, Œuf, Fromage, Lanchon).</li>
+                <li>Le caissier décoche les ingrédients demandés à retirer (ex: <em>« Sans Oignon »</em>, <em>« Sans Harissa »</em>).</li>
+                <li>Il sélectionne les sauces offertes et les suppléments tarifés (ex: <em>« Fromage Cheddar +3 DH »</em>).</li>
+                <li>Il valide la recette : la boîte gourmande est injectée dans le bon de commande avec badge de quantité live.</li>
+                <li>Le récapitulatif affiche en direct le montant total à payer en Dirhams Marocains (DH).</li>
+                <li>Le caissier clique sur <strong>« Valider la commande »</strong> (raccourci F8).</li>
+                <li>La modale d'encaissement présente les raccourcis espèces (Exact, 20 DH, 50 DH, 100 DH, 200 DH).</li>
+                <li>Le caissier saisit ou sélectionne le montant remis par le client.</li>
+                <li>Le système calcule instantanément et affiche la <strong>monnaie à rendre</strong>.</li>
+                <li>Le caissier confirme le règlement en espèces.</li>
+                <li>Le système persiste la transaction dans MySQL avec le numéro de ticket journalier et le statut <code>EN_PREPARATION</code>.</li>
+                <li>Le système déclenche l'impression thermique simultanée du <strong>Ticket Client</strong> et du <strong>Bon de Cuisine</strong> (RG04).</li>
+            </ol>
+
+            <h3 class="block-title">Données figurant sur le double-ticket (Thermique 80mm)</h3>
+            <ul class="bullet-list">
+                <li><strong>En-tête :</strong> Nom de l'établissement (<em>M3i9dat Ba M'Barek — Meknès</em>), Date et Heure précises.</li>
+                <li><strong>Numéro de commande :</strong> Identifiant séquentiel journalier géant (ex: <code>#14</code>).</li>
+                <li><strong>Consignes de fabrication :</strong> Sandwichs commandés avec mentions d'omissions (<em>SANS HARISSA</em>) et d'ajouts (<em>SUPPLÉMENT FROMAGE</em>).</li>
+                <li><strong>Détail financier :</strong> Montant total (DH), Montant perçu et Monnaie rendue.</li>
+            </ul>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception UML — RestoOS Cloud (M39ODA)</span>
+            <span>Page 2 / 5</span>
+        </footer>
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 3 : SCÉNARIOS ALTERNATIFS & ERGONOMIE CAISSE
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <h3 class="block-title">5. Scénarios alternatifs (Exceptions métier)</h3>
+
+            <div class="alt-scenario-title">A1 — Panier vide lors de la validation (Règle RG02)</div>
+            <ul class="bullet-list">
+                <li>Le caissier tente de valider la commande alors qu'aucun article n'a été inséré.</li>
+                <li>Le système bloque l'opération, fait clignoter le panier vide en rouge et affiche : <em>« Veuillez sélectionner au moins un sandwich »</em>.</li>
+            </ul>
+
+            <div class="alt-scenario-title">A2 — Montant reçu en espèces insuffisant</div>
+            <ul class="bullet-list">
+                <li>Le caissier saisit un montant d'espèces inférieur au total de la commande.</li>
+                <li>Le système affiche un solde négatif en rouge et désactive le bouton final de confirmation.</li>
+            </ul>
+
+            <div class="alt-scenario-title">A3 — Rupture de stock inopinée pendant la commande</div>
+            <ul class="bullet-list">
+                <li>Le gérant passe un sandwich en rupture depuis son espace de gestion.</li>
+                <li>Le terminal caisse grise immédiatement le produit avec la mention <em>« Épuisé »</em> et interdit son ajout.</li>
+            </ul>
+
+            <div class="alt-scenario-title">A4 — Abandon ou réinitialisation du panier</div>
+            <ul class="bullet-list">
+                <li>Le caissier appuie sur <strong>« Vider »</strong> : le panier est remis à zéro sans écriture en base de données.</li>
+            </ul>
+
+            <h3 class="block-title" style="margin-top: 18px;">6. Postconditions</h3>
+
+            <div class="postcondition-subtitle">En cas de succès</div>
+            <ul class="bullet-list">
+                <li>La commande est enregistrée dans la table <code>commandes</code> liée au restaurant courant (<code>id_restaurant</code>).</li>
+                <li>Les préférences d'ingrédients sont enregistrées dans <code>details_ingredients</code>.</li>
+                <li>Le tiroir-caisse théorique est incrémenté du montant encaissé.</li>
+                <li>La commande apparaît instantanément en cuisine (KDS) et sur l'écran d'appel TV (RG08).</li>
+            </ul>
+
+            <h3 class="block-title" style="margin-top: 18px;">7. Ergonomie de l’interface Caisse (Norme Tactile Tablette)</h3>
+            <p>L'interface caisse a été spécialement conçue pour les tablettes tactiles 10 à 12 pouces utilisées en restauration rapide :</p>
+            <ul class="bullet-list">
+                <li><strong>Format 100dvh Kiosque :</strong> Aucune barre d'adresse ni défilement parasite ; tout l'écran reste verrouillé et accessible.</li>
+                <li><strong>Cibles tactiles larges (&ge; 44px) :</strong> Cartes de sandwichs larges avec déclenchement direct ou bouton grand format <em>« Personnaliser »</em>.</li>
+                <li><strong>Contraste visuel élevé :</strong> Palette chaude marocaine (Terracotta <code>#C2410C</code>, Ambre <code>#D97706</code>, Vert émeraude <code>#10B981</code>).</li>
+                <li><strong>Badges de quantité intégrés :</strong> Chaque carte de sandwich affiche directement le nombre d'unités présentes dans le panier courant.</li>
+            </ul>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception UML — RestoOS Cloud (M39ODA)</span>
+            <span>Page 3 / 5</span>
+        </footer>
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 4 : SPÉCIFICATION CAS D'UTILISATION 2 (CUISINE KDS)
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <h2 class="subsection-title">2.2 Cas d’utilisation 2 — Préparer et valider une commande (KDS Cuisine)</h2>
+
+            <h3 class="block-title">1. Nom du cas d’utilisation</h3>
+            <p>Préparer une commande et notifier sa mise à disposition.</p>
+
+            <h3 class="block-title">2. Acteur principal</h3>
+            <p>Cuisinier / Chef de cuisine (Poste KDS plancha et cuisson).</p>
+
+            <h3 class="block-title">3. Préconditions</h3>
+            <ul class="bullet-list">
+                <li>Le cuisinier est authentifié sur l'écran tactile cuisine (<code>cuisine.php</code>).</li>
+                <li>Une ou plusieurs commandes ont été transmises par la caisse avec le statut <code>EN_PREPARATION</code>.</li>
+            </ul>
+
+            <h3 class="block-title">4. Scénario nominal</h3>
+            <ol class="step-list">
+                <li>Le cuisinier consulte l'écran KDS affichant les cartes de commandes organisées chronologiquement (FIFO).</li>
+                <li>Lorsqu'une nouvelle commande arrive de la caisse, un bip sonore discret alerte le cuisinier et la carte s'anime.</li>
+                <li>Le ticket affiche clairement :
+                    <ul class="bullet-list" style="margin: 4px 0 4px 15px;">
+                        <li>Le numéro de commande géant (ex: <code>#14</code>).</li>
+                        <li>Le minuteur d'attente écoulé (SLA) avec code couleur (Vert &lt; 5 min, Ambre &lt; 10 min, Rouge alerte &gt; 12 min).</li>
+                        <li>Les recettes exactes et les <strong>omissions surlignées en rouge</strong> (ex: <em>SANS HARISSA</em>).</li>
+                        <li>Les suppléments gourmands surlignés en vert (ex: <em>EXTRA DOUBLE FROMAGE</em>).</li>
+                    </ul>
+                </li>
+                <li>Le cuisinier prépare et assemble les sandwichs conformément aux consignes.</li>
+                <li>Une fois la commande prête au passe-plat, il appuie sur le bouton <strong>« Commande Prête »</strong> (RG06).</li>
+                <li>Le système enregistre la transition d'état vers <code>PRETE</code> dans la base de données.</li>
+                <li>L'écran d'appel TV client (<code>ecran.php</code>) bascule instantanément le numéro en vert et déclenche le carillon sonore.</li>
+                <li>Le ticket passe dans la colonne des commandes en attente de remise au client.</li>
+                <li>Lors de la remise au client, le cuisinier ou le serveur clique sur <strong>« Servie »</strong>.</li>
+                <li>Le système archive la commande dans l'historique et la retire des écrans opérationnels actifs (RG09).</li>
+            </ol>
+
+            <h3 class="block-title" style="margin-top: 14px;">5. Scénarios alternatifs</h3>
+
+            <div class="alt-scenario-title">A1 — File de préparation vide</div>
+            <ul class="bullet-list">
+                <li>Aucune commande n'est en attente. Le système affiche une illustration paisible : <em>« Toutes les commandes sont prêtes. Prêt pour le prochain rush ! »</em>.</li>
+            </ul>
+
+            <div class="alt-scenario-title">A2 — Retard de cuisson (Alerte SLA dépassée)</div>
+            <ul class="bullet-list">
+                <li>Le minuteur de commande dépasse 10 minutes : la carte passe en rouge pulsant pour alerter le chef d'un goulot d'étranglement.</li>
+            </ul>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception UML — RestoOS Cloud (M39ODA)</span>
+            <span>Page 4 / 5</span>
+        </footer>
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 5 : CYCLE DE VIE (FSM RG07) & ARCHITECTURE SAAS
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <h1 class="section-title">3. Cycle de vie des commandes &amp; Machine à États Finis (Règle RG07)</h1>
+
+            <p>Pour éliminer tout risque d'erreur humaine et garantir la fiabilité du chiffre d'affaires, le système applique un cycle de vie strict à états finis interdisant les sauts d'états directs :</p>
+
+            <div class="diagram-wrapper" style="margin: 15px auto;">
+                <svg class="uml-svg" width="560" height="150" viewBox="0 0 560 150" xmlns="http://www.w3.org/2000/svg">
+                    <style>
+                        .fsm-state { fill: #ffffff; stroke: #0f2b5c; stroke-width: 2; rx: 8; }
+                        .fsm-txt { font-family: sans-serif; font-size: 11px; font-weight: 800; fill: #0f2b5c; text-anchor: middle; }
+                        .fsm-sub { font-family: sans-serif; font-size: 8.5px; fill: #64748b; text-anchor: middle; }
+                        .fsm-arrow { stroke: #c2410c; stroke-width: 2; marker-end: url(#arrow); }
+                        .fsm-label { font-family: sans-serif; font-size: 8.5px; font-weight: 700; fill: #c2410c; text-anchor: middle; }
+                    </style>
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 1 L 8 5 L 0 9 z" fill="#c2410c" />
+                        </marker>
+                    </defs>
+
+                    <!-- Initial State -->
+                    <circle cx="25" cy="75" r="10" fill="#0f2b5c"/>
+
+                    <!-- Transition 1 -->
+                    <line x1="35" y1="75" x2="80" y2="75" class="fsm-arrow"/>
+                    <text class="fsm-label" x="58" y="65">Validation Caisse</text>
+
+                    <!-- State 1: EN_PREPARATION -->
+                    <rect class="fsm-state" x="80" y="45" width="130" height="60"/>
+                    <text class="fsm-txt" x="145" y="72">EN_PREPARATION</text>
+                    <text class="fsm-sub" x="145" y="88">Cuisson plancha KDS</text>
+
+                    <!-- Transition 2 -->
+                    <line x1="210" y1="75" x2="265" y2="75" class="fsm-arrow"/>
+                    <text class="fsm-label" x="238" y="65">« Prête »</text>
+
+                    <!-- State 2: PRETE -->
+                    <rect class="fsm-state" x="265" y="45" width="120" height="60" stroke="#15803d"/>
+                    <text class="fsm-txt" x="325" y="72" fill="#15803d">PRETE</text>
+                    <text class="fsm-sub" x="325" y="88">Appel TV &amp; Carillon</text>
+
+                    <!-- Transition 3 -->
+                    <line x1="385" y1="75" x2="435" y2="75" class="fsm-arrow"/>
+                    <text class="fsm-label" x="410" y="65">« Servie »</text>
+
+                    <!-- State 3: SERVIE -->
+                    <rect class="fsm-state" x="435" y="45" width="100" height="60" stroke="#0284c7"/>
+                    <text class="fsm-txt" x="485" y="72" fill="#0284c7">SERVIE</text>
+                    <text class="fsm-sub" x="485" y="88">Archive &amp; Rapport Z</text>
+                </svg>
+            </div>
+
+            <h1 class="section-title" style="margin-top: 15px;">4. Synthèse des Modules &amp; Rôles Multi-Tenant SaaS</h1>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Rôle / Acteur</th>
+                        <th>Interface Dédiée</th>
+                        <th>Missions Clés &amp; Responsabilités</th>
+                        <th>Technologie &amp; Écran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Caissier</strong></td>
+                        <td><code>index.php</code></td>
+                        <td>Prise de commande tactile, personnalisation recettes, encaissement espèces DH, impression double-ticket.</td>
+                        <td>Tablette tactile (Touch-first 100dvh)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cuisinier</strong></td>
+                        <td><code>cuisine.php</code></td>
+                        <td>File KDS temps réel, respect des préférences de cuisson, minuteurs SLA, validation des commandes prêtes.</td>
+                        <td>Écran mural KDS (Polling AJAX 3s)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Client (Écran)</strong></td>
+                        <td><code>ecran.php</code></td>
+                        <td>Affichage des commandes en préparation et prêtes, carillon sonore sans perturbation vocale.</td>
+                        <td>Smart TV murale / Fullscreen</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gérant</strong></td>
+                        <td><code>menu_admin.php</code></td>
+                        <td>Gestion des sandwichs, rupture de stocks en 1-clic, ingrédients payants, clôture de caisse Rapport Z.</td>
+                        <td>PC portable / Tablette admin</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SuperAdmin</strong></td>
+                        <td><code>superadmin.php</code></td>
+                        <td>Tour de contrôle SaaS : déploiement de nouveaux restaurants tenants, gestion des abonnements et métriques MRR.</td>
+                        <td>Bureau direction / Desktop</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout-box" style="margin-top: 10px;">
+                <strong>Sécurité &amp; Intégrité :</strong> L'authentification repose sur des mots de passe hachés en BCRYPT avec protection contre la force brute. L'isolation multi-tenant est garantie au niveau SQL par <code>id_restaurant</code>, empêchant tout accès transversal entre établissements.
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception UML — RestoOS Cloud (M39ODA)</span>
+            <span>Page 5 / 5</span>
+        </footer>
+    </div>
+
+</body>
+</html>
+

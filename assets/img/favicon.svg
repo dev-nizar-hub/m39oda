@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c2410c"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <linearGradient id="bunGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- App Icon Squircle Background -->
+  <rect width="64" height="64" rx="15" fill="url(#bgGrad)"/>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+  <!-- Sandwich Icon Content -->
+  <g filter="url(#shadow)" transform="translate(0, 1)">
+    <!-- Top Bun -->
+    <path d="M12 25 C12 15, 52 15, 52 25 C52 27, 12 27, 12 25 Z" fill="url(#bunGrad)"/>
+    <circle cx="24" cy="20" r="1" fill="#fff" opacity="0.8"/>
+    <circle cx="32" cy="18" r="1.1" fill="#fff" opacity="0.9"/>
+    <circle cx="40" cy="20" r="1" fill="#fff" opacity="0.8"/>
+
+    <!-- Green Herbs / Olives Garnish Layer -->
+    <path d="M14 27 Q 20 29, 26 27 Q 32 30, 38 27 Q 44 29, 50 27 L50 29 Q 44 31, 38 29 Q 32 32, 26 29 Q 20 31, 14 29 Z" fill="#22c55e"/>
+
+    <!-- Golden Crispy Maâkouda Patty (The Specialty) -->
+    <rect x="10" y="30" width="44" height="6" rx="3" fill="#d97706"/>
+    <rect x="12" y="31" width="40" height="2" rx="1" fill="#fef08a" opacity="0.4"/>
+
+    <!-- Melted Cheese Corner -->
+    <polygon points="20,36 34,36 27,42" fill="#fbbf24"/>
+
+    <!-- Bottom Bun -->
+    <path d="M13 38 L51 38 C51 46, 13 46, 13 38 Z" fill="url(#bunGrad)"/>
+  </g>
+</svg>
+
