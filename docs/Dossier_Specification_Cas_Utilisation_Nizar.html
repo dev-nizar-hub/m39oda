@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spécification Formelle des Cas d'Utilisation — Système M39ODA</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 18mm 20mm 18mm 20mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #0f172a;
+            background: #f8fafc;
+            line-height: 1.55;
+            font-size: 10pt;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            padding: 22mm 20mm 20mm 20mm;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .page-content {
+            flex: 1 0 auto;
+        }
+
+        .page-footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8.5pt;
+            color: #64748b;
+        }
+
+        /* En-tête de Document */
+        .header-project {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-top: 5px;
+        }
+
+        .project-category {
+            font-size: 9pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #c2410c;
+            margin-bottom: 6px;
+        }
+
+        .project-main-title {
+            font-size: 19pt;
+            font-weight: 800;
+            color: #0f2b5c;
+            letter-spacing: -0.3px;
+            margin-bottom: 5px;
+        }
+
+        .project-sub-title {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #0284c7;
+            margin-bottom: 12px;
+        }
+
+        .header-accent-line {
+            width: 80px;
+            height: 2.5px;
+            background: linear-gradient(90deg, #c2410c, #0284c7);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        h1.chapitre-title {
+            font-size: 13.5pt;
+            font-weight: 800;
+            color: #0f2b5c;
+            border-bottom: 2px solid #0284c7;
+            padding-bottom: 5px;
+            margin-bottom: 18px;
+            letter-spacing: -0.2px;
+        }
+
+        h2.section-heading {
+            font-size: 11.5pt;
+            font-weight: 800;
+            color: #0284c7;
+            margin-top: 6px;
+            margin-bottom: 12px;
+            letter-spacing: -0.2px;
+        }
+
+        h3.rubrique-title {
+            font-size: 10pt;
+            font-weight: 800;
+            color: #0f2b5c;
+            margin-top: 14px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 8px;
+            color: #334155;
+            text-align: justify;
+        }
+
+        /* Listes */
+        ul.custom-bullets {
+            list-style: none;
+            margin-bottom: 10px;
+            padding-left: 0;
+        }
+
+        ul.custom-bullets li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 4px;
+            color: #334155;
+        }
+
+        ul.custom-bullets li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: #0284c7;
+            font-weight: bold;
+            font-size: 11pt;
+            line-height: 1;
+        }
+
+        ol.numbered-steps {
+            margin-left: 22px;
+            margin-bottom: 12px;
+            color: #334155;
+        }
+
+        ol.numbered-steps li {
+            margin-bottom: 4px;
+            padding-left: 4px;
+        }
+
+        .scenario-alt-badge {
+            font-weight: 800;
+            color: #c2410c;
+            margin-top: 9px;
+            margin-bottom: 3px;
+            font-size: 9.5pt;
+        }
+
+        .postcond-badge {
+            font-weight: 700;
+            color: #0f2b5c;
+            margin-top: 7px;
+            margin-bottom: 3px;
+            font-size: 9.5pt;
+        }
+
+        .important-notice {
+            background: #f8fafc;
+            border-left: 3.5px solid #0284c7;
+            padding: 9px 12px;
+            margin: 12px 0 14px 0;
+            font-size: 9.2pt;
+            color: #1e293b;
+        }
+
+        .figure-note {
+            font-size: 8pt;
+            font-style: italic;
+            color: #64748b;
+            text-align: center;
+            max-width: 90%;
+            margin: 12px auto 0 auto;
+            line-height: 1.4;
+        }
+
+        .diagram-box {
+            margin: 25px auto 10px auto;
+            text-align: center;
+        }
+
+        .svg-canvas {
+            max-width: 100%;
+            height: auto;
+            display: inline-block;
+        }
+
+        /* Print Media Styles */
+        @media print {
+            body {
+                background: #ffffff;
+                color: #0f172a;
+                font-size: 9.5pt;
+                margin: 0;
+                padding: 0;
+            }
+
+            .page-container {
+                width: 100%;
+                min-height: 255mm;
+                height: 255mm;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                page-break-after: always;
+                break-after: page;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .page-container:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            .page-footer {
+                display: flex;
+                border-top: 1px solid #cbd5e1;
+                padding-top: 8px;
+                font-size: 8.5pt;
+                color: #64748b;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         PAGE 1 : DIAGRAMME UML DE CAS D'UTILISATION ORIGINAL
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <header class="header-project">
+                <div class="project-category">Dossier de Conception &amp; Analyse Informatique</div>
+                <h1 class="project-main-title">Système de Caisse &amp; Préparation de Commandes</h1>
+                <div class="project-sub-title">Application Métier RestoOS — Sandwicherie Artisanale M39ODA</div>
+                <div class="header-accent-line"></div>
+            </header>
+
+            <h1 class="chapitre-title">1. Diagramme UML de cas d’utilisation</h1>
+
+            <div class="diagram-box">
+                <svg class="svg-canvas" width="580" height="460" viewBox="0 0 580 460" xmlns="http://www.w3.org/2000/svg">
+                    <style>
+                        .border-app { fill: #ffffff; stroke: #0f2b5c; stroke-width: 2.2; }
+                        .text-title-app { font-family: sans-serif; font-size: 13px; font-weight: 800; fill: #0f2b5c; }
+                        .role-label { font-family: sans-serif; font-size: 12.5px; font-weight: 800; text-anchor: middle; }
+                        .color-cashier { fill: #c2410c; }
+                        .color-cook { fill: #0284c7; }
+                        .bubble-uc { fill: #f8fafc; stroke: #0284c7; stroke-width: 1.8; }
+                        .bubble-core { fill: #eff6ff; stroke: #0f2b5c; stroke-width: 2; }
+                        .text-uc-main { font-family: sans-serif; font-size: 11px; font-weight: 700; fill: #0f2b5c; text-anchor: middle; }
+                        .text-uc-detail { font-family: sans-serif; font-size: 9px; fill: #64748b; text-anchor: middle; }
+                        .conn-line { stroke: #0f2b5c; stroke-width: 1.6; stroke-linecap: round; }
+                        .dash-dep { stroke: #0284c7; stroke-width: 1.3; stroke-dasharray: 4,3; }
+                        .tag-dep { font-family: sans-serif; font-size: 8.5px; font-weight: 800; fill: #0284c7; text-anchor: middle; }
+                        .stick-man { stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                    </style>
+
+                    <!-- Cadre Limite du Système -->
+                    <rect class="border-app" x="140" y="20" width="300" height="420" rx="3"/>
+                    <text class="text-title-app" x="160" y="48">Système Caisse &amp; Cuisine M39ODA</text>
+
+                    <!-- Cas 1 : Enregistrer et encaisser une commande -->
+                    <ellipse class="bubble-core" cx="290" cy="120" rx="100" ry="32"/>
+                    <text class="text-uc-main" x="290" y="116">Enregistrer et encaisser</text>
+                    <text class="text-uc-main" x="290" y="130">une commande</text>
+
+                    <!-- Sous-cas : Personnaliser la composition -->
+                    <ellipse class="bubble-uc" cx="290" cy="200" rx="90" ry="22"/>
+                    <text class="text-uc-main" x="290" y="200">Personnaliser la recette</text>
+                    <text class="text-uc-detail" x="290" y="211">(Garnitures, Sauces, Suppléments)</text>
+
+                    <!-- Relation extend entre Cas 1 et Personnaliser -->
+                    <line class="dash-dep" x1="290" y1="152" x2="290" y2="178"/>
+                    <text class="tag-dep" x="312" y="168">«extend»</text>
+
+                    <!-- Cas 2 : Traiter et finaliser la préparation -->
+                    <ellipse class="bubble-core" cx="290" cy="330" rx="100" ry="32"/>
+                    <text class="text-uc-main" x="290" y="326">Traiter et finaliser</text>
+                    <text class="text-uc-main" x="290" y="340">la préparation</text>
+
+                    <!-- Acteur Gauche : Caissier -->
+                    <g transform="translate(45, 80)">
+                        <circle cx="25" cy="15" r="11" class="stick-man" stroke="#c2410c"/>
+                        <line x1="25" y1="26" x2="25" y2="60" class="stick-man" stroke="#c2410c"/>
+                        <line x1="10" y1="38" x2="40" y2="38" class="stick-man" stroke="#c2410c"/>
+                        <line x1="25" y1="60" x2="10" y2="88" class="stick-man" stroke="#c2410c"/>
+                        <line x1="25" y1="60" x2="40" y2="88" class="stick-man" stroke="#c2410c"/>
+                        <text class="role-label color-cashier" x="25" y="108">Caissier</text>
+                    </g>
+                    <!-- Association Caissier -> Cas 1 -->
+                    <line class="conn-line" x1="88" y1="120" x2="190" y2="120"/>
+
+                    <!-- Acteur Droite : Préparateur / Cuisinier -->
+                    <g transform="translate(490, 290)">
+                        <circle cx="25" cy="15" r="11" class="stick-man" stroke="#0284c7"/>
+                        <line x1="25" y1="26" x2="25" y2="60" class="stick-man" stroke="#0284c7"/>
+                        <line x1="10" y1="38" x2="40" y2="38" class="stick-man" stroke="#0284c7"/>
+                        <line x1="25" y1="60" x2="10" y2="88" class="stick-man" stroke="#0284c7"/>
+                        <line x1="25" y1="60" x2="40" y2="88" class="stick-man" stroke="#0284c7"/>
+                        <text class="role-label color-cook" x="25" y="108">Cuisinier</text>
+                    </g>
+                    <!-- Association Cuisinier -> Cas 2 -->
+                    <line class="conn-line" x1="490" y1="330" x2="390" y2="330"/>
+                </svg>
+
+                <p class="figure-note">
+                    Figure 1 — Modélisation formelle des cas d’utilisation. Les acteurs Caissier et Cuisinier interagissent de façon asynchrone avec le système pour assurer la traçabilité intégrale du flux de commande.
+                </p>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception Logicielle — Système M39ODA</span>
+            <span>Page 1 / 5</span>
+        </footer>
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 2 : CAS D'UTILISATION 1 (CAISSIER)
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <h1 class="chapitre-title">2. Spécification détaillée des cas d’utilisation</h1>
+
+            <h2 class="section-heading">2.1 Cas d’utilisation 1 — Enregistrer et encaisser une commande</h2>
+
+            <h3 class="rubrique-title">1. Identification</h3>
+            <p><strong>Intitulé :</strong> Enregistrer et encaisser une commande au comptoir.</p>
+
+            <h3 class="rubrique-title">2. Acteur principal</h3>
+            <p><strong>Caissier :</strong> Opérateur de vente affecté au terminal de caisse tactile du restaurant.</p>
+
+            <h3 class="rubrique-title">3. Préconditions</h3>
+            <ul class="custom-bullets">
+                <li>L’opérateur s’est authentifié avec succès sur sa session de caisse (<code>index.php</code>).</li>
+                <li>Le catalogue des produits et les ingrédients sont chargés et synchronisés avec la base de données.</li>
+            </ul>
+
+            <h3 class="rubrique-title">4. Déroulement nominal</h3>
+            <ol class="numbered-steps">
+                <li>Le caissier parcourt la carte des sandwichs selon les catégories affichées à l'écran.</li>
+                <li>Il touche directement le produit souhaité par le client pour l'ajouter au récapitulatif.</li>
+                <li>Pour adapter la garniture, il active le bouton <strong>« Personnaliser »</strong> de l'article.</li>
+                <li>L’interface affiche la composition initiale du sandwich, avec ses ingrédients de base activés par défaut.</li>
+                <li>Le caissier décoche les ingrédients que le consommateur désire omettre (ex. : sans sauce piquante, sans oignons).</li>
+                <li>Il sélectionne, le cas échéant, des suppléments culinaires (ex. : double fromage, œuf, lanchon).</li>
+                <li>Il confirme la composition : la formule personnalisée rejoint instantanément le récapitulatif de vente.</li>
+                <li>Le caissier répète l'opération pour l'ensemble des articles constitutifs de la commande.</li>
+                <li>Il ajuste si nécessaire les volumes d'articles ou purge un produit non désiré.</li>
+                <li>Le montant global à régler est recalculé automatiquement en temps réel.</li>
+                <li>Le caissier renseigne la somme en espèces transmise par le client.</li>
+                <li>L'application détermine et affiche immédiatement le montant exact de la monnaie à restituer.</li>
+                <li>Le caissier contrôle le récapitulatif ainsi que les données d'encaissement.</li>
+                <li>Il valide la commande : la transaction est enregistrée en base de données sous le statut <code>EN_PREPARATION</code>.</li>
+                <li>Le système génère simultanément le reçu client et le bon de fabrication destiné au poste de cuisine.</li>
+                <li>Les documents de vente sont prêts à l'impression thermique.</li>
+            </ol>
+
+            <h3 class="rubrique-title">Mentions figurant sur le ticket de vente</h3>
+            <ul class="custom-bullets">
+                <li>Identifiant unique et séquentiel de la commande journalière.</li>
+                <li>Détail nominatif des sandwichs et quantités commandées.</li>
+                <li>Spécificités de préparation (ingrédients exclus et suppléments ajoutés).</li>
+                <li>Total financier exigible en Dirhams Marocains (DH).</li>
+                <li>Valeur des espèces encaissées et montant de la monnaie restituée.</li>
+            </ul>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception Logicielle — Système M39ODA</span>
+            <span>Page 2 / 5</span>
+        </footer>
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 3 : EXCEPTIONS & ERGONOMIE CAISSE
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <div class="important-notice">
+                <strong>Règle tarifaire :</strong> Dans cette version de référence, les suppléments et ajouts d’ingrédients ne font l’objet d’aucune surtaxe tarifaire afin de fluidifier la cadence aux heures de pointe.
+            </div>
+
+            <h3 class="rubrique-title">5. Scénarios alternatifs &amp; d'exception</h3>
+
+            <div class="scenario-alt-badge">A1 — Soumission d’une commande vide</div>
+            <ul class="custom-bullets">
+                <li>Le caissier déclenche la validation alors que le panier ne comporte aucun produit.</li>
+                <li>Le système bloque la requête et notifie l'opérateur de l'obligation de sélectionner au moins un article.</li>
+                <li>Aucun enregistrement n'est créé en base.</li>
+            </ul>
+
+            <div class="scenario-alt-badge">A2 — Règlement financier insuffisant</div>
+            <ul class="custom-bullets">
+                <li>Le montant remis en espèces est inférieur à la somme due de la commande.</li>
+                <li>Le système refuse l'encaissement et maintient la commande en attente d'appoint.</li>
+            </ul>
+
+            <div class="scenario-alt-badge">A3 — Interruption ou abandon de transaction</div>
+            <ul class="custom-bullets">
+                <li>Le client renonce ou le caissier réinitialise l'écran avant le règlement.</li>
+                <li>La commande est purement annulée sans aucune écriture dans les journaux de vente.</li>
+            </ul>
+
+            <h3 class="rubrique-title" style="margin-top: 18px;">6. Postconditions</h3>
+
+            <div class="postcond-badge">Issue nominale (Succès)</div>
+            <ul class="custom-bullets">
+                <li>La commande est sauvegardée avec l'intégralité de ses options d'ingrédients.</li>
+                <li>Le statut initial attribué est formellement positionné à <code>EN_PREPARATION</code>.</li>
+                <li>Le ticket apparaît sans délai dans la file de confection du cuisinier.</li>
+                <li>Le reçu est édité et mis à disposition.</li>
+            </ul>
+
+            <div class="postcond-badge">Issue d'interruption (Échec)</div>
+            <ul class="custom-bullets">
+                <li>Aucune opération d’écriture financière n’est effectuée.</li>
+            </ul>
+
+            <h3 class="rubrique-title" style="margin-top: 18px;">7. Ergonomie &amp; Expérience Utilisateur (Terminal Caisse)</h3>
+            <p>Le terminal caisse a été conçu selon les standards d'ergonomie tactile pour environnements à fort débit :</p>
+            <p>Les cartes de sandwichs disposent d'un bouton d'accès direct et d'un bouton distinct <strong>« Personnaliser »</strong>. L'ouverture de l'atelier de personnalisation présente une interface claire où chaque ingrédient peut être décoché ou ajouté par simple contact tactile. Après validation de la recette, le récapitulatif s'enrichit de l'article personnalisé.</p>
+
+            <p style="margin-top: 8px; margin-bottom: 4px;">Le panneau de commande affiche en permanence :</p>
+            <ul class="custom-bullets">
+                <li>La liste distincte des sandwichs retenus.</li>
+                <li>Les quantités associées.</li>
+                <li>Les variantes de composition (ingrédients retirés ou complétés).</li>
+                <li>Le montant total dû.</li>
+            </ul>
+
+            <p>La saisie du montant perçu calcule instantanément la monnaie à rendre sans calcul manuel. La confirmation déclenche simultanément la mémorisation et la sortie du ticket.</p>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception Logicielle — Système M39ODA</span>
+            <span>Page 3 / 5</span>
+        </footer>
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 4 : CAS D'UTILISATION 2 (CUISINIER)
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <h2 class="section-heading">2.2 Cas d’utilisation 2 — Préparer et finaliser une commande</h2>
+
+            <h3 class="rubrique-title">1. Identification</h3>
+            <p><strong>Intitulé :</strong> Confectionner les sandwichs et notifier la fin de préparation.</p>
+
+            <h3 class="rubrique-title">2. Acteur principal</h3>
+            <p><strong>Cuisinier :</strong> Préparateur opérant dans l'espace cuisine / plancha.</p>
+
+            <h3 class="rubrique-title">3. Préconditions</h3>
+            <ul class="custom-bullets">
+                <li>L’opérateur de cuisine a ouvert son écran de travail (<code>cuisine.php</code>).</li>
+                <li>Au moins une commande transmise par la caisse possède l'état <code>EN_PREPARATION</code>.</li>
+            </ul>
+
+            <h3 class="rubrique-title">4. Déroulement nominal</h3>
+            <ol class="numbered-steps">
+                <li>Le cuisinier consulte la file des commandes actives affichées par ordre chronologique d'arrivée.</li>
+                <li>Le système présente les commandes en attente sous la forme de cartes de préparation lisibles.</li>
+                <li>Lors de l’arrivée d’une nouvelle commande, celle-ci s'affiche avec le détail complet de confection.</li>
+                <li>La fiche de préparation expose les données opérationnelles suivantes :
+                    <ul class="custom-bullets" style="margin: 4px 0 4px 18px;">
+                        <li>Numéro d’ordre de la commande.</li>
+                        <li>Heure d’enregistrement au comptoir.</li>
+                        <li>Désignation des sandwichs à confectionner.</li>
+                        <li>Nombre d’unités requises.</li>
+                        <li>Ingrédients de base à exclure de la recette.</li>
+                        <li>Ingrédients supplémentaires à intégrer.</li>
+                        <li>Prix unitaire des articles.</li>
+                        <li>Valeur financière globale de la commande.</li>
+                    </ul>
+                </li>
+                <li>Le cuisinier prend connaissance des spécificités demandées par le client.</li>
+                <li>Il assemble et cuit les sandwichs selon les personnalisations indiquées.</li>
+                <li>Une fois la confection terminée, il actionne la commande <strong>« Commande prête »</strong>.</li>
+                <li>L'application met à jour l'enregistrement avec le statut <code>PRETE</code>.</li>
+                <li>Le ticket quitte la zone de préparation active pour libérer l'espace visuel du cuisinier.</li>
+            </ol>
+
+            <h3 class="rubrique-title" style="margin-top: 14px;">5. Scénarios alternatifs</h3>
+
+            <div class="scenario-alt-badge">A1 — Absence de commandes en cours (File vide)</div>
+            <ul class="custom-bullets">
+                <li>Le cuisinier accède à l’espace de cuisine alors qu'aucune commande n'est en attente.</li>
+                <li>L’application affiche une notification claire signalant la vacuité de la file d’attente.</li>
+            </ul>
+
+            <div class="scenario-alt-badge">A2 — Préparation en cours non finalisée</div>
+            <ul class="custom-bullets">
+                <li>Le cuisinier n’a pas encore validé l’achèvement de la confection.</li>
+                <li>Le système maintient formellement le statut <code>EN_PREPARATION</code>.</li>
+                <li>Le ticket demeure visible dans la file jusqu’à action délibérée de l'opérateur.</li>
+            </ul>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception Logicielle — Système M39ODA</span>
+            <span>Page 4 / 5</span>
+        </footer>
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 5 : POSTCONDITIONS & ERGONOMIE CUISINE
+         ============================================================ -->
+    <div class="page-container">
+        <div class="page-content">
+            <h3 class="rubrique-title">6. Postconditions</h3>
+
+            <div class="postcond-badge">Après validation de confection</div>
+            <ul class="custom-bullets">
+                <li>Le statut de la commande bascule de manière irréversible à <code>PRETE</code>.</li>
+                <li>Le ticket est retiré de la file de cuisson pour éviter toute surcharge d'informations.</li>
+                <li>La commande est transmise aux canaux de notification de retrait au comptoir.</li>
+            </ul>
+
+            <div class="postcond-badge">Sans validation d'achèvement</div>
+            <ul class="custom-bullets">
+                <li>Le statut reste inchangé sous la valeur <code>EN_PREPARATION</code>.</li>
+                <li>La commande reste affichée parmi les préparations prioritaires.</li>
+            </ul>
+
+            <h3 class="rubrique-title" style="margin-top: 22px;">7. Ergonomie &amp; Expérience Utilisateur (Poste Cuisine)</h3>
+            <p>L’interface du cuisinier est entièrement séparée de l'espace de caisse. Elle privilégie la lisibilité immédiate, la sobriété et une interaction minimale compatible avec les contraintes d'hygiène et de rapidité d'un atelier culinaire.</p>
+
+            <p style="margin-top: 10px; margin-bottom: 5px;">Chaque carte de préparation restitue de façon synthétique et contrastée :</p>
+            <ul class="custom-bullets">
+                <li>Le numéro d’ordre visible de loin.</li>
+                <li>L’heure exacte de prise de commande.</li>
+                <li>Les types de sandwichs à monter.</li>
+                <li>Les quantités demandées.</li>
+                <li>Les exclusions d’ingrédients mises en évidence.</li>
+                <li>Les suppléments à incorporer.</li>
+                <li>Les valeurs tarifaires associées.</li>
+            </ul>
+
+            <p style="margin-top: 12px;">Le cuisinier conserve un accès visuel permanent aux consignes pendant toute la phase de cuisson. Le bouton <strong>« Commande prête »</strong> occupe une position dominante et facilement repérable. En période d'inactivité, un message explicite prévient l'opérateur de l'absence de tickets en attente. La validation purge automatiquement la carte de l'écran.</p>
+        </div>
+
+        <footer class="page-footer">
+            <span>Dossier de Conception Logicielle — Système M39ODA</span>
+            <span>Page 5 / 5</span>
+        </footer>
+    </div>
+
+</body>
+</html>
